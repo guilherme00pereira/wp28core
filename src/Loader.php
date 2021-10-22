@@ -1,13 +1,13 @@
 <?php
 
 
-namespace WP28\SKUMANAGER\Lib\WP28Core;
+namespace WP28\WP28Core;
 
 use Exception;
 
 /**
  * Class Loader
- * @package WP28\SKUMANAGER\Lib\WP28Core\Core\
+ * @package WP28\WP28Core\Core\
  */
 class Loader
 {

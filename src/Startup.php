@@ -1,17 +1,11 @@
 <?php
 
-namespace WP28\SKUMANAGER\Lib\WP28Core;
+namespace WP28\WP28Core;
 
 use Exception;
 use WP28\SKUMANAGER\SkuManager;
 
-/**
- *  Check requirements before plugin initialization
- * @package \WP28\SKUMANAGER\Lib\WP28Core\WP28\SKUMANAGER\Lib\WP28CoreCore
- * @version 1.0.0
- * @since 1.0.0
- * @author WP28\SKUMANAGER\Lib\WP28Core <WP28\SKUMANAGER\Lib\WP28Coredev@gmail.com>
- */
+
 final class Startup {
 
 	/**

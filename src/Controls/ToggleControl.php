@@ -1,6 +1,6 @@
 <?php
 
-namespace WP28\SKUMANAGER\Lib\WP28Core\Controls;
+namespace WP28\WP28Core\Controls;
 
 class ToggleControl extends HtmlControl {
 
