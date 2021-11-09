@@ -4,7 +4,7 @@ This is a library project to support plugins developed by [WP28](https://wp28.de
 
 ### Usage
 
-Clone this repository into a **"lib"** directory on plugin's root folder. Execute replace.php script to update namespace, passing the value as -n parameter.
+Clone this repository into a **"\lib\Core"** directory at plugin's root folder on WordPress. Execute replace.php script to update namespace, passing the value as -n parameter.
 
 ### Conventions
 
