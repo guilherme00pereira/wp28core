@@ -1,6 +1,6 @@
 <?php
 
-namespace WP28\WP28Core;
+namespace WP28\REPLACE\Lib\Core\Helpers;
 
 class HtmlManager {
 

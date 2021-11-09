@@ -1,6 +1,6 @@
 <?php
 
-namespace WP28\WP28Core\Controls;
+namespace WP28\REPLACE\Lib\Core\Helpers;
 
 abstract class HtmlControl {
 

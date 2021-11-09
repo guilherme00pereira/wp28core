@@ -1,13 +1,13 @@
 <?php
 
 
-namespace WP28\WP28Core;
+namespace WP28\REPLACE\Lib\Core\Helpers;
 
 use Exception;
 
 /**
  * Class Loader
- * @package WP28\WP28Core\Core\
+ * @package WP28\REPLACE\Lib\Core\Core\
  */
 class Loader
 {

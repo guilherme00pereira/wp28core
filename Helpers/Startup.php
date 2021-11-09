@@ -1,9 +1,11 @@
 <?php
 
-namespace WP28\WP28Core;
+namespace WP28\REPLACE\Lib\Core\Helpers;
 
 use Exception;
-use WP28\SKUMANAGER\SkuManager;
+use WP28\REPLACE\Lib\Core\Exceptions\InvalidPhpVersion;
+use WP28\REPLACE\Lib\Core\Exceptions\WP28Exception;
+use WP28\REPLACE\Lib\Core\Exceptions\WP28ExceptionFactory;
 
 
 final class Startup {
@@ -18,41 +20,34 @@ final class Startup {
 	{
 		try
 		{
-			//check minimum PHP version
 			if(version_compare(phpversion(), $phpVersion, '<'))
 			{
-				throw new Exception(
+				throw new InvalidPhpVersion(
 					sprintf(__('Este plugin requer ao menos a versão %s do PHP para funcionar.', Plugin::getTextDomain()),$phpVersion)
 				);
 			}
-
-			//check if dependencies are loaded
 			if (!empty($dependencies))
 			{
 				require_once( ABSPATH . '/wp-admin/includes/plugin.php' );
-				foreach ($dependencies as $dependency)
-					if ( !is_plugin_active($dependency) && !is_plugin_active_for_network($dependency) )
-					{
-						throw new Exception('Plugin não ativado');
+				foreach ($dependencies as $dependency) {
+					if ( ! is_plugin_active( $dependency ) && ! is_plugin_active_for_network( $dependency ) ) {
+						throw WP28ExceptionFactory::getException( $dependency );
 					}
+				}
 			}
 			return true;
 		}
-		catch (Exception $exception)
+		catch (WP28Exception $exception)
 		{
 			add_action(
 				'admin_notices',
 				function () use ($exception) {
 					?>
 					<div class="notice notice-error">
-						<p>Não é possível habilitar o plugin <strong>Sku Manager</strong> no momento, certifique-se de atender os seguintes requisitos:</p>
-						<p><?=$exception->getMessage();?>.</p>
+                        <?php echo $exception->render(); ?>
 					</div>
 					<?php
-
-					// In case this is on plugin activation.
 					if ( isset( $_GET['activate'] ) ) unset( $_GET['activate'] );
-					// Desactivate plugin
 					deactivate_plugins( plugin_basename( __FILE__ ) );
 				}
 			);
