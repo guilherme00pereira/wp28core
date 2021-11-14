@@ -5,7 +5,6 @@ namespace WP28\REPLACE\Lib\Core\Helpers;
 abstract class Plugin {
 
 	private static array $args;
-	private static string $version;
 	private static string $url;
 	private static string $dir;
 	private static string $template_dir;
@@ -13,9 +12,8 @@ abstract class Plugin {
 	private static string $slug;
 	private static string $options_name;
 	private static string $plugin_base;
+	private static array $plugin_data;
 	private static string $text_domain;
-	private static string $name;
-	private static string $prefix;
 
 	public function __construct($args)
 	{
@@ -24,8 +22,7 @@ abstract class Plugin {
 
 	abstract function init();
 
-	public function setup( $version, $root, $text_domain, $name, $prefix ): void {
-		self::$version      = $version;
+	public function setup( $root ): void {
 		self::$url          = plugin_dir_url( $root );
 		self::$dir          = plugin_dir_path( $root );
 		self::$plugin_base  = plugin_basename( $root );
@@ -33,9 +30,8 @@ abstract class Plugin {
 		self::$assets_url   = self::$url . 'assets/';
 		self::$slug         = trim( dirname( self::$plugin_base ), '/' );
 		self::$options_name = self::$slug . '_options';
-		self::$text_domain  = $text_domain;
-		self::$name         = $name;
-		self::$prefix       = $prefix;
+		self::$text_domain  = self::$slug;
+		self::$plugin_data  = get_plugin_data($root);
 	}
 
 	public static function activate()
@@ -43,6 +39,11 @@ abstract class Plugin {
 		if(!get_option(self::getOptionsName())) {
 			self::addOptions();
 		}
+	}
+
+	public static function getPrefix() : string
+	{
+		return substr(preg_replace('#[aeiou\-\s]+#i', '', self::$slug), 0, 10);
 	}
 
 	public static function getOptions()
@@ -63,7 +64,7 @@ abstract class Plugin {
 	 */
 	public static function getVersion(): string
 	{
-		return self::$version;
+		return self::$plugin_data['Version'];
 	}
 
 	/**
@@ -126,7 +127,7 @@ abstract class Plugin {
 	 */
 	public static function getName(): string
 	{
-		return self::$name;
+		return self::$plugin_data['Name'];
 	}
 
 	/**
@@ -140,8 +141,9 @@ abstract class Plugin {
 	/**
 	 * @return string
 	 */
-	public static function getPrefix(): string {
-		return self::$prefix;
+	public static function getPhpVersion(): string
+	{
+		return self::$plugin_data['RequiresPHP'];
 	}
 
 }

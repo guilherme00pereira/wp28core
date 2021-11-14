@@ -11,19 +11,18 @@ use WP28\REPLACE\Lib\Core\Exceptions\WP28ExceptionFactory;
 final class Startup {
 
 	/**
-	 * @param string $phpVersion
 	 * @param array $dependencies
 	 *
 	 * @return bool
 	 */
-	public static function hasEnvironmentRequirements( string $phpVersion, array $dependencies = [] ) : bool
+	public static function hasEnvironmentRequirements( array $dependencies = [] ) : bool
 	{
 		try
 		{
-			if(version_compare(phpversion(), $phpVersion, '<'))
+			if(version_compare(phpversion(), Plugin::getPhpVersion(), '<'))
 			{
 				throw new InvalidPhpVersion(
-					sprintf(__('Este plugin requer ao menos a versão %s do PHP para funcionar.', Plugin::getTextDomain()),$phpVersion)
+					sprintf(__('Este plugin requer ao menos a versão %s do PHP para funcionar.', Plugin::getTextDomain()), Plugin::getPhpVersion())
 				);
 			}
 			if (!empty($dependencies))
